@@ -68,7 +68,7 @@ const resources = {
     { name: "GREC (Aberdeen)", url: "https://grec.co.uk/" },
   ],
   housing: [
-    { name: "Aberdeen City Council Housing", url: "https://www.aberdeenshire.gov.uk/" },
+    { name: "Aberdeenshire Council Housing", url: "https://www.aberdeenshire.gov.uk/" },
     { name: "Charities & Churches", url: "#" },
   ],
   health: [
