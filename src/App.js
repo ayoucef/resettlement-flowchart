@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import { Scale, Home, Heart, Users } from "lucide-react"; // icons
 
 const flow = {
   start: {
     question: "Initial Intake: What’s the first priority?",
     options: [
-      { label: "Immigration / Legal", next: "legal" },
-      { label: "Housing", next: "housing" },
-      { label: "Health & Wellbeing", next: "health" },
-      { label: "Community & Integration", next: "community" },
+      { label: "Immigration / Legal", next: "legal", icon: <Scale className="w-6 h-6 mr-2" /> },
+      { label: "Housing", next: "housing", icon: <Home className="w-6 h-6 mr-2" /> },
+      { label: "Health & Wellbeing", next: "health", icon: <Heart className="w-6 h-6 mr-2" /> },
+      { label: "Community & Integration", next: "community", icon: <Users className="w-6 h-6 mr-2" /> },
     ],
   },
   legal: {
@@ -122,14 +123,16 @@ export default function App() {
 
         <div className="grid gap-3">
           {current.options.map((opt, idx) => (
-            <button
-              key={idx}
-              onClick={() => handleClick(opt)}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl shadow"
-            >
-              {opt.label}
-            </button>
-          ))}
+  <button
+    key={idx}
+    onClick={() => handleClick(opt)}
+    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-xl shadow flex items-center justify-start"
+  >
+    {opt.icon}
+    <span>{opt.label}</span>
+  </button>
+))}
+
         </div>
 
         <div className="mt-6 flex flex-wrap gap-3 justify-between">
