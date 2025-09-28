@@ -3,12 +3,12 @@ import { Scale, Home, Heart, Users } from "lucide-react"; // icons
 
 const flow = {
   start: {
-    question: "Initial Intake: What’s the first priority?",
+    question: "Initial Intake: What’s the first priority for the Asylum Seeker?",
     options: [
-      { label: "Immigration / Legal", next: "legal", icon: <Scale className="w-6 h-6 mr-2" /> },
-      { label: "Housing", next: "housing", icon: <Home className="w-6 h-6 mr-2" /> },
-      { label: "Health & Wellbeing", next: "health", icon: <Heart className="w-6 h-6 mr-2" /> },
-      { label: "Community & Integration", next: "community", icon: <Users className="w-6 h-6 mr-2" /> },
+      { label: "Immigration / Legal", next: "legal", icon: <Scale className="w-6 h-6 mr-2" />, color: "bg-blue-600 hover:bg-blue-700" },
+      { label: "Housing", next: "housing", icon: <Home className="w-6 h-6 mr-2" />, color: "bg-green-600 hover:bg-green-700" },
+      { label: "Health & Wellbeing", next: "health", icon: <Heart className="w-6 h-6 mr-2" />, color: "bg-red-600 hover:bg-red-700" },
+      { label: "Community & Integration", next: "community", icon: <Users className="w-6 h-6 mr-2" />, color: "bg-purple-600 hover:bg-purple-700" },
     ],
   },
   legal: {
@@ -126,7 +126,7 @@ export default function App() {
   <button
     key={idx}
     onClick={() => handleClick(opt)}
-    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-xl shadow flex items-center justify-start"
+    className={`${opt.color} w-full text-white py-3 px-4 rounded-xl shadow flex items-center justify-start`}
   >
     {opt.icon}
     <span>{opt.label}</span>
