@@ -98,6 +98,16 @@ export default function App() {
     setPath([]);
   };
 
+  // Decide which resources to show
+  let visibleResources;
+  if (resources[step]) {
+    visibleResources = { [step]: resources[step] };
+  } else if (resources[step.replace("refer_", "")]) {
+    visibleResources = { [step.replace("refer_", "")]: resources[step.replace("refer_", "")] };
+  } else {
+    visibleResources = resources; // show all at start/done
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row p-6 gap-6">
       {/* Main Flowchart Panel */}
@@ -141,7 +151,7 @@ export default function App() {
       {/* Sidebar Resources */}
       <div className="w-full md:w-80 bg-white rounded-2xl shadow-lg p-6">
         <h2 className="text-xl font-bold mb-4">Quick Resources</h2>
-        {Object.entries(resources).map(([category, links]) => (
+        {Object.entries(visibleResources).map(([category, links]) => (
           <div key={category} className="mb-4">
             <h3 className="text-lg font-semibold capitalize mb-2">{category}</h3>
             <ul className="space-y-2">
