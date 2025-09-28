@@ -126,12 +126,15 @@ export default function App() {
   <button
     key={idx}
     onClick={() => handleClick(opt)}
-    className={`${opt.color} w-full text-white py-3 px-4 rounded-xl shadow flex items-center justify-start`}
+    className={`${
+      opt.color ? opt.color : "bg-gray-600 hover:bg-gray-700"
+    } w-full text-white py-3 px-4 rounded-xl shadow flex items-center justify-start`}
   >
-    {opt.icon}
+    {opt.icon ? opt.icon : null}
     <span>{opt.label}</span>
   </button>
 ))}
+
 
         </div>
 
