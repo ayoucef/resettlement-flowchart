@@ -132,20 +132,36 @@ export default function App() {
           ))}
         </div>
 
-        <div className="mt-6 flex justify-between">
-          <button
-            onClick={handleRestart}
-            className="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded-xl"
-          >
-            Restart
-          </button>
-          <button
-            onClick={() => alert(JSON.stringify(path, null, 2))}
-            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl"
-          >
-            Print Summary
-          </button>
-        </div>
+        <div className="mt-6 flex flex-wrap gap-3 justify-between">
+  <button
+    onClick={handleRestart}
+    className="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded-xl"
+  >
+    Restart
+  </button>
+
+  <button
+    onClick={() => alert(JSON.stringify(path, null, 2))}
+    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl"
+  >
+    Print Summary
+  </button>
+
+  <button
+    onClick={() => {
+      const summary = path
+        .map((step) => `Step: ${step.step}\nChoice: ${step.choice}`)
+        .join("\n\n");
+      navigator.clipboard.writeText(summary).then(() => {
+        alert("✅ Summary copied to clipboard!");
+      });
+    }}
+    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl"
+  >
+    Copy Summary
+  </button>
+</div>
+
       </div>
 
       {/* Sidebar Resources */}
