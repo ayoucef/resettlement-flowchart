@@ -35,8 +35,10 @@ const flow = {
       { label: "Education", next: "education", icon: Book, color: "bg-yellow-600 hover:bg-yellow-700" },
       { label: "Employment", next: "employment", icon: Briefcase, color: "bg-indigo-600 hover:bg-indigo-700" },
       { label: "Finance", next: "finance", icon: Wallet, color: "bg-teal-600 hover:bg-teal-700" },
+      { label: "Age Check (NEC Card)", next: "age", icon: Bus, color: "bg-orange-600 hover:bg-orange-700" },
     ],
   },
+
 
   // --- Immigration / Legal
   legal: {
