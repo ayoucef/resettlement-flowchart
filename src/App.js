@@ -179,16 +179,25 @@ export default function App() {
   }
 
   // special case: Age check step
-  function handleAgeSubmit() {
-    const ageNum = parseInt(age, 10);
-    if (!isNaN(ageNum) && (ageNum < 22 || ageNum > 60)) {
-      window.open("https://www.transport.gov.scot/concessionary-travel/young-persons-free-bus-travel-scheme/", "_blank");
-      setPath((p) => [...p, { step: "age", choice: `Age ${ageNum} → NEC travel card referral` }]);
-    } else {
-      setPath((p) => [...p, { step: "age", choice: `Age ${ageNum}` }]);
-    }
-    setStep("done");
+function handleAgeSubmit() {
+  const ageNum = parseInt(age, 10);
+  const necUrl =
+    "https://www.transport.gov.scot/concessionary-travel/young-persons-free-bus-travel-scheme/";
+
+  if (!isNaN(ageNum) && (ageNum < 22 || ageNum > 60)) {
+    // open NEC card site
+    window.open(necUrl, "_blank");
+    // add full link into the case summary
+    setPath((p) => [
+      ...p,
+      { step: "age", choice: `Age ${ageNum} → NEC travel card referral (${necUrl})` },
+    ]);
+  } else {
+    setPath((p) => [...p, { step: "age", choice: `Age ${ageNum}` }]);
   }
+  setStep("done");
+}
+
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col p-6">
