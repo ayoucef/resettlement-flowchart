@@ -90,6 +90,7 @@ const flow = {
 };
 
 
+
 // Sidebar resource list
 const resources = {
   legal: [
