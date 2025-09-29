@@ -1,65 +1,94 @@
-import React, { useState } from "react";
-import { Scale, Home, Heart, Users } from "lucide-react"; // icons
+import { Scale, Home, Heart, Users, Check, X, Landmark, Building2, Church, Hospital, ClipboardList, RefreshCcw } from "lucide-react";
 
 const flow = {
   start: {
-    question: "Initial Intake: What’s the first priority for the Asylum Seeker?",
+    question: "Initial Intake: What’s the first priority?",
     options: [
-      { label: "Immigration / Legal", next: "legal", icon: <Scale className="w-6 h-6 mr-2" />, color: "bg-blue-600 hover:bg-blue-700" },
-      { label: "Housing", next: "housing", icon: <Home className="w-6 h-6 mr-2" />, color: "bg-green-600 hover:bg-green-700" },
-      { label: "Health & Wellbeing", next: "health", icon: <Heart className="w-6 h-6 mr-2" />, color: "bg-red-600 hover:bg-red-700" },
-      { label: "Community & Integration", next: "community", icon: <Users className="w-6 h-6 mr-2" />, color: "bg-purple-600 hover:bg-purple-700" },
+      {
+        label: "Immigration / Legal",
+        next: "legal",
+        icon: <Scale className="w-6 h-6 mr-2" />,
+        color: "bg-blue-600 hover:bg-blue-700"
+      },
+      {
+        label: "Housing",
+        next: "housing",
+        icon: <Home className="w-6 h-6 mr-2" />,
+        color: "bg-green-600 hover:bg-green-700"
+      },
+      {
+        label: "Health & Wellbeing",
+        next: "health",
+        icon: <Heart className="w-6 h-6 mr-2" />,
+        color: "bg-red-600 hover:bg-red-700"
+      },
+      {
+        label: "Community & Integration",
+        next: "community",
+        icon: <Users className="w-6 h-6 mr-2" />,
+        color: "bg-purple-600 hover:bg-purple-700"
+      },
     ],
   },
+
   legal: {
     question: "Does the person already have legal representation?",
     options: [
-      { label: "Yes", next: "done" },
-      { label: "No", next: "refer_legal" },
+      { label: "Yes", next: "done", icon: <Check className="w-6 h-6 mr-2" />, color: "bg-green-600 hover:bg-green-700" },
+      { label: "No", next: "refer_legal", icon: <X className="w-6 h-6 mr-2" />, color: "bg-red-600 hover:bg-red-700" },
     ],
   },
+
   refer_legal: {
     question: "Refer to legal support:",
     options: [
-      { label: "Migrant Help", next: "done" },
-      { label: "Scottish Refugee Council", next: "done" },
-      { label: "GREC (Aberdeen)", next: "done" },
+      { label: "Migrant Help", next: "done", icon: <Landmark className="w-6 h-6 mr-2" />, color: "bg-blue-600 hover:bg-blue-700" },
+      { label: "Scottish Refugee Council", next: "done", icon: <ClipboardList className="w-6 h-6 mr-2" />, color: "bg-blue-500 hover:bg-blue-600" },
+      { label: "GREC (Aberdeen)", next: "done", icon: <Building2 className="w-6 h-6 mr-2" />, color: "bg-blue-400 hover:bg-blue-500" },
     ],
   },
+
   housing: {
     question: "Is housing secure?",
     options: [
-      { label: "Yes", next: "done" },
-      { label: "No", next: "refer_housing" },
+      { label: "Yes", next: "done", icon: <Check className="w-6 h-6 mr-2" />, color: "bg-green-600 hover:bg-green-700" },
+      { label: "No", next: "refer_housing", icon: <X className="w-6 h-6 mr-2" />, color: "bg-red-600 hover:bg-red-700" },
     ],
   },
+
   refer_housing: {
     question: "Signpost to housing support:",
     options: [
-      { label: "Local council housing team", next: "done" },
-      { label: "Charities / Churches", next: "done" },
+      { label: "Local council housing team", next: "done", icon: <Building2 className="w-6 h-6 mr-2" />, color: "bg-green-600 hover:bg-green-700" },
+      { label: "Charities / Churches", next: "done", icon: <Church className="w-6 h-6 mr-2" />, color: "bg-purple-600 hover:bg-purple-700" },
     ],
   },
+
   health: {
     question: "Any urgent health needs?",
     options: [
-      { label: "Yes → NHS services", next: "done" },
-      { label: "No → Register with GP", next: "done" },
+      { label: "Yes → NHS services", next: "done", icon: <Hospital className="w-6 h-6 mr-2" />, color: "bg-red-600 hover:bg-red-700" },
+      { label: "No → Register with GP", next: "done", icon: <ClipboardList className="w-6 h-6 mr-2" />, color: "bg-red-400 hover:bg-red-500" },
     ],
   },
+
   community: {
     question: "Connect to local support:",
     options: [
-      { label: "Volunteers", next: "done" },
-      { label: "Charities", next: "done" },
-      { label: "Community groups", next: "done" },
+      { label: "Volunteers", next: "done", icon: <Users className="w-6 h-6 mr-2" />, color: "bg-purple-500 hover:bg-purple-600" },
+      { label: "Charities", next: "done", icon: <Church className="w-6 h-6 mr-2" />, color: "bg-purple-600 hover:bg-purple-700" },
+      { label: "Community groups", next: "done", icon: <Users className="w-6 h-6 mr-2" />, color: "bg-purple-400 hover:bg-purple-500" },
     ],
   },
+
   done: {
     question: "✅ End of this pathway. Review notes and print summary.",
-    options: [{ label: "Restart", next: "start" }],
+    options: [
+      { label: "Restart", next: "start", icon: <RefreshCcw className="w-6 h-6 mr-2" />, color: "bg-gray-400 hover:bg-gray-500" },
+    ],
   },
 };
+
 
 // Sidebar resource list
 const resources = {
