@@ -26,7 +26,7 @@ import {
  */
 const flow = {
   start: {
-    question: "Initial Intake: What’s the first priority?",
+    question: "Initial Intake: What’s the first priority for the Asylum Seeker?",
     options: [
       { label: "Immigration / Legal", next: "legal", icon: Scale, color: "bg-blue-600 hover:bg-blue-700" },
       { label: "Housing", next: "housing", icon: Home, color: "bg-green-600 hover:bg-green-700" },
@@ -42,7 +42,7 @@ const flow = {
 
   // --- Immigration / Legal
   legal: {
-    question: "Does the person already have legal representation?",
+    question: "Does the Asylum Seeker already have legal representation?",
     options: [
       { label: "Yes", next: "done", icon: Landmark, color: "bg-green-600 hover:bg-green-700" },
       { label: "No", next: "refer_legal", icon: Landmark, color: "bg-red-600 hover:bg-red-700" },
@@ -164,19 +164,28 @@ export default function App() {
   }
 
   function openPrintableSummary() {
-    const html = `
-      <html>
-        <head><title>Case Summary</title></head>
-        <body style="font-family: Arial, sans-serif; padding: 20px;">
-          <h1>Case Summary</h1>
-          <pre>${path.map((p, i) => `${i + 1}. [${p.step}] ${p.choice}`).join("\n")}</pre>
-        </body>
-      </html>
-    `;
-    const w = window.open("", "_blank");
-    w.document.write(html);
-    w.document.close();
-  }
+  const html = `
+    <html>
+      <head><title>Case Summary</title></head>
+      <body style="font-family: Arial, sans-serif; padding: 20px;">
+        <h1>Case Summary</h1>
+        <ul>
+          ${path
+            .map((p, i) =>
+              p.url
+                ? `<li>${i + 1}. [${p.step}] <a href="${p.url}" target="_blank">${p.choice}</a></li>`
+                : `<li>${i + 1}. [${p.step}] ${p.choice}</li>`
+            )
+            .join("")}
+        </ul>
+      </body>
+    </html>
+  `;
+  const w = window.open("", "_blank");
+  w.document.write(html);
+  w.document.close();
+}
+
 
   // special case: Age check step
 function handleAgeSubmit() {
@@ -185,18 +194,21 @@ function handleAgeSubmit() {
     "https://www.transport.gov.scot/concessionary-travel/young-persons-free-bus-travel-scheme/";
 
   if (!isNaN(ageNum) && (ageNum < 22 || ageNum > 60)) {
-    // open NEC card site
     window.open(necUrl, "_blank");
-    // add full link into the case summary
     setPath((p) => [
       ...p,
-      { step: "age", choice: `Age ${ageNum} → NEC travel card referral (${necUrl})` },
+      {
+        step: "age",
+        choice: `Age ${ageNum} → NEC travel card referral`,
+        url: necUrl,
+      },
     ]);
   } else {
     setPath((p) => [...p, { step: "age", choice: `Age ${ageNum}` }]);
   }
   setStep("done");
 }
+
 
 
   return (
@@ -253,8 +265,31 @@ function handleAgeSubmit() {
         </div>
 
         <div className="mt-4 text-sm text-gray-600">
-          <strong>Path:</strong> {path.length ? path.map((p) => p.choice).join(" → ") : "— not started —"}
-        </div>
+  <strong>Path:</strong>{" "}
+  {path.length ? (
+    <ul className="list-disc list-inside">
+      {path.map((p, i) => (
+        <li key={i}>
+          {p.url ? (
+            <a
+              href={p.url}
+              target="_blank"
+              rel="noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              {p.choice}
+            </a>
+          ) : (
+            p.choice
+          )}
+        </li>
+      ))}
+    </ul>
+  ) : (
+    "— not started —"
+  )}
+</div>
+
       </div>
     </div>
   );
