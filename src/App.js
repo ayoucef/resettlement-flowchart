@@ -1,5 +1,8 @@
 // src/App.js
 import React, { useState } from "react";
+import Papa from "papaparse";
+import { saveAs } from "file-saver";
+
 import {
   Scale,
   Home,
@@ -186,6 +189,27 @@ export default function App() {
   w.document.close();
 }
 
+function exportToCSV() {
+  const date = new Date().toISOString();
+
+  const data = path.map((p, i) => ({
+    QueryID: Date.now() + "-" + i,   // unique ID
+    DateTime: date,
+    Category: path[0]?.choice || "Unknown",
+    Step: p.step,
+    Choice: p.choice,
+    URL: p.url || "",
+  }));
+
+  // Convert to CSV
+  const csv = Papa.unparse(data);
+
+  // Create a blob and save file
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  saveAs(blob, `resettlement_queries_${date.split("T")[0]}.csv`);
+}
+
+
 
   // special case: Age check step
 function handleAgeSubmit() {
@@ -255,13 +279,28 @@ function handleAgeSubmit() {
           </button>
 
           <div className="flex gap-3">
-            <button onClick={openPrintableSummary} className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl flex items-center gap-2">
-              <Printer className="w-4 h-4" /> Print
-            </button>
-            <button onClick={copySummaryToClipboard} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl flex items-center gap-2">
-              <ClipboardCopy className="w-4 h-4" /> Copy
-            </button>
-          </div>
+  <button
+    onClick={openPrintableSummary}
+    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl flex items-center gap-2"
+  >
+    <Printer className="w-4 h-4" /> Print
+  </button>
+
+  <button
+    onClick={copySummaryToClipboard}
+    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl flex items-center gap-2"
+  >
+    <ClipboardCopy className="w-4 h-4" /> Copy
+  </button>
+
+  <button
+    onClick={exportToCSV}
+    className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-xl flex items-center gap-2"
+  >
+    Export to CSV
+  </button>
+</div>
+
         </div>
 
         <div className="mt-4 text-sm text-gray-600">
